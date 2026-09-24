@@ -175,7 +175,6 @@
     highScore: document.getElementById('high-score'),
     time: document.getElementById('time'),
     speed: document.getElementById('speed'),
-    holdBtn: document.getElementById('hold-btn'),
     pauseBtn: document.getElementById('pause-btn'),
     startModal: document.getElementById('start-modal'),
     startBtn: document.getElementById('start-btn'),
@@ -223,7 +222,7 @@
       el.textContent = isHoney ? '🍯' : flowerEmojis[i % (flowerEmojis.length - 1)];
 
       const initialX = getW() + i * 220 + Math.random() * 80;
-      const initialY = 80 + Math.random() * (getH() * 0.55);
+      const initialY = 25 + Math.random() * (getH() * 0.65);
 
       el.style.left = initialX + 'px';
       el.style.top = initialY + 'px';
@@ -244,8 +243,8 @@
     if (type === 'cloud-storm') el.textContent = '🌩️';
 
     const yPos = type === 'branch'
-      ? getH() * 0.72 - 30
-      : 70 + Math.random() * (getH() * 0.55);
+      ? getH() * 0.80 - 30
+      : 40 + Math.random() * (getH() * 0.60);
 
     const xPos = getW() + 80;
     el.style.left = xPos + 'px';
@@ -301,7 +300,7 @@
 
         // Reposition flower off-screen right
         f.x = getW() + 100 + Math.random() * 200;
-        f.y = 80 + Math.random() * (getH() * 0.55);
+        f.y = 25 + Math.random() * (getH() * 0.65);
       }
     });
 
@@ -404,8 +403,8 @@
     vy *= 0.985; // Damping for smooth float control
     y += vy * dt;
 
-    const ceiling = 15;
-    const ground = getH() * 0.75 - 45;
+    const ceiling = 2; // Can fly all the way up to the very top edge of the sky!
+    const ground = getH() * 0.82 - 45;
 
     // Soft-clamp boundaries so top sky and bottom grass don't cause Game Over
     if (y <= ceiling) {
@@ -447,7 +446,7 @@
       f.x -= 140 * speed * dt;
       if (f.x < -80) {
         f.x = getW() + 80 + Math.random() * 150;
-        f.y = 80 + Math.random() * (getH() * 0.55);
+        f.y = 25 + Math.random() * (getH() * 0.65);
         f.el.style.top = f.y + 'px';
       }
       f.el.style.left = f.x + 'px';
@@ -462,11 +461,6 @@
   function setHolding(val) {
     if (isRunning && !isPaused) {
       isHolding = val;
-      if (val) {
-        DOM.holdBtn.classList.add('active');
-      } else {
-        DOM.holdBtn.classList.remove('active');
-      }
     }
   }
 
@@ -479,12 +473,6 @@
   window.addEventListener('pointerup', () => setHolding(false));
   window.addEventListener('pointercancel', () => setHolding(false));
 
-  // Button Controls
-  DOM.holdBtn.addEventListener('pointerdown', (e) => {
-    e.preventDefault();
-    audio.init();
-    setHolding(true);
-  });
 
   // Keyboard Spacebar / Arrow Up Controls
   document.addEventListener('keydown', (e) => {

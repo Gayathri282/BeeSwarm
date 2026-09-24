@@ -9,39 +9,25 @@
 </head>
 <body>
   <div id="app">
-    <!-- Top HUD Banner -->
-    <header class="hud-header">
-      <div class="brand">
-        <span class="brand-icon">🐝</span>
-        <div>
-          <div class="brand-title">Bee Swarm</div>
-          <div class="brand-sub">Child Friendly Flight</div>
-        </div>
-      </div>
-
-      <div class="stats-container">
-        <div class="stat-pill">
-          <span class="stat-value" id="score">0</span>
-          <span class="stat-label">Flowers</span>
-        </div>
-        <div class="stat-pill">
-          <span class="stat-value" id="high-score">0</span>
-          <span class="stat-label">Best</span>
-        </div>
-        <div class="stat-pill">
-          <span class="stat-value" id="time">0</span>
-          <span class="stat-label">Sec</span>
-        </div>
-        <div class="stat-pill">
-          <span class="stat-value" id="speed">1.0×</span>
-          <span class="stat-label">Speed</span>
-        </div>
-        <button id="pause-btn" class="pause-btn" title="Pause Game">⏸️</button>
-      </div>
-    </header>
-
-    <!-- Play Grid / Fullscreen World -->
+    <!-- Play Grid / Fullscreen World (Occupies 100% of viewport) -->
     <main id="world">
+      <!-- Compact Floating HUD Badge inside Gamefield -->
+      <div class="hud-overlay">
+        <div class="hud-pill">
+          <span>🌸</span> <strong id="score">0</strong>
+        </div>
+        <div class="hud-pill">
+          <span>🏆</span> <strong id="high-score">0</strong>
+        </div>
+        <div class="hud-pill">
+          <span>⏱️</span> <strong id="time">0</strong>s
+        </div>
+        <div class="hud-pill">
+          <span>⚡</span> <strong id="speed">1.0×</strong>
+        </div>
+        <button id="pause-btn" class="hud-pause-btn" title="Pause Game">⏸️</button>
+      </div>
+
       <!-- Background Elements -->
       <div class="sun"></div>
       <div class="cloud cloud-1"></div>
@@ -84,21 +70,17 @@
           </g>
         </svg>
       </div>
-    </main>
 
-    <!-- Controls Bar -->
-    <footer class="controls-bar">
-      <button id="hold-btn" class="hold-btn">
-        <span>🐝</span> HOLD TO FLY UP
-      </button>
-    </footer>
+      <!-- Subtle Fly Hint Overlay -->
+      <div class="fly-hint"><span>🐝</span> Hold anywhere on screen to fly up</div>
+    </main>
 
     <!-- Start Modal -->
     <div id="start-modal" class="modal-overlay">
       <div class="modal-card">
         <div style="font-size: 54px; margin-bottom: 10px;">🐝🌸</div>
         <h2 class="modal-title">Ready Little Bee?</h2>
-        <p class="modal-subtitle">Hold the screen or spacebar to fly up!<br>Collect flowers 🌸 and honey 🍯 while dodging hazards!</p>
+        <p class="modal-subtitle">Hold anywhere on the screen or spacebar to fly up!<br>Collect flowers 🌸 and honey 🍯 while dodging hazards!</p>
         <button id="start-btn" class="action-btn primary">START FLYING! 🚀</button>
       </div>
     </div>
