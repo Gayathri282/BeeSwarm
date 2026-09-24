@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Bee Swarm Adventure 🐝</title>
+  <meta name="description" content="A cute, child-friendly bee flying adventure game! Collect flowers and honey, dodge hazards, and reach new high scores.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Top HUD Banner -->
+    <header class="hud-header">
+      <div class="brand">
+        <span class="brand-icon">🐝</span>
+        <div>
+          <div class="brand-title">Bee Swarm</div>
+          <div class="brand-sub">Child Friendly Flight</div>
+        </div>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-pill">
+          <span class="stat-value" id="score">0</span>
+          <span class="stat-label">Flowers</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-value" id="high-score">0</span>
+          <span class="stat-label">Best</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-value" id="time">0</span>
+          <span class="stat-label">Sec</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-value" id="speed">1.0×</span>
+          <span class="stat-label">Speed</span>
+        </div>
+        <button id="pause-btn" class="pause-btn" title="Pause Game">⏸️</button>
+      </div>
+    </header>
+
+    <!-- Play Grid / Fullscreen World -->
+    <main id="world">
+      <!-- Background Elements -->
+      <div class="sun"></div>
+      <div class="cloud cloud-1"></div>
+      <div class="cloud cloud-2"></div>
+
+      <!-- Scenery Hills -->
+      <div class="scenery-hills">
+        <div class="hill-grass"></div>
+      </div>
+
+      <!-- Cute Bee Character (SVG matching user reference) -->
+      <div id="bee" class="bee-character">
+        <svg class="bee-svg" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+          <g class="bee-group">
+            <!-- Wings (Upright & Translucent with veins) -->
+            <g class="wings">
+              <!-- Back Wing -->
+              <path class="wing wing-back" d="M 52 42 C 45 10, 78 2, 82 28 C 84 38, 62 48, 52 42 Z" fill="#CBEBF0" stroke="#7CB9C4" stroke-width="2.8" />
+              <path d="M 60 32 C 67 18, 74 13, 77 20" fill="none" stroke="#9FD5DF" stroke-width="2" stroke-linecap="round" />
+              <path d="M 57 38 C 65 30, 72 26, 75 32" fill="none" stroke="#9FD5DF" stroke-width="1.8" stroke-linecap="round" />
+              
+              <!-- Front Wing -->
+              <path class="wing wing-front" d="M 38 46 C 22 14, 58 4, 66 28 C 68 38, 48 50, 38 46 Z" fill="#E2F6F9" stroke="#7CB9C4" stroke-width="2.8" />
+              <path d="M 46 34 C 52 18, 58 14, 62 21" fill="none" stroke="#9FD5DF" stroke-width="2" stroke-linecap="round" />
+              <path d="M 43 40 C 50 32, 56 28, 60 34" fill="none" stroke="#9FD5DF" stroke-width="1.8" stroke-linecap="round" />
+            </g>
+
+            <!-- Stinger -->
+            <path d="M 32 62 L 10 68 L 28 76 Z" fill="#3D2314" stroke="#3D2314" stroke-width="1.5" stroke-linejoin="round" />
+
+            <!-- Chubby Bean Body -->
+            <ellipse cx="68" cy="65" rx="36" ry="26" fill="#F4A211" transform="rotate(-6 68 65)" />
+
+            <!-- Stripes -->
+            <path d="M 50 40 C 47 55, 47 75, 52 90 L 63 89 C 58 75, 58 55, 61 41 Z" fill="#3D2314" />
+            <path d="M 68 40 C 65 55, 65 75, 70 90 L 81 88 C 76 75, 76 55, 79 40 Z" fill="#3D2314" />
+
+            <!-- Eye -->
+            <circle cx="92" cy="58" r="5" fill="#3D2314" />
+          </g>
+        </svg>
+      </div>
+    </main>
+
+    <!-- Controls Bar -->
+    <footer class="controls-bar">
+      <button id="hold-btn" class="hold-btn">
+        <span>🐝</span> HOLD TO FLY UP
+      </button>
+    </footer>
+
+    <!-- Start Modal -->
+    <div id="start-modal" class="modal-overlay">
+      <div class="modal-card">
+        <div style="font-size: 54px; margin-bottom: 10px;">🐝🌸</div>
+        <h2 class="modal-title">Ready Little Bee?</h2>
+        <p class="modal-subtitle">Hold the screen or spacebar to fly up!<br>Collect flowers 🌸 and honey 🍯 while dodging hazards!</p>
+        <button id="start-btn" class="action-btn primary">START FLYING! 🚀</button>
+      </div>
+    </div>
+
+    <!-- Pause Modal -->
+    <div id="pause-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div style="font-size: 54px; margin-bottom: 10px;">⏸️🌻</div>
+        <h2 class="modal-title">Game Paused</h2>
+        <p class="modal-subtitle">Take a quick break, little bee!</p>
+        <button id="resume-btn" class="action-btn primary">RESUME FLYING ▶️</button>
+      </div>
+    </div>
+
+    <!-- Game Over Modal -->
+    <div id="game-over-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <div style="font-size: 54px; margin-bottom: 10px;">🌟🐝</div>
+        <h2 class="modal-title">Amazing Flight!</h2>
+        <p class="modal-subtitle">
+          You collected <strong id="final-score" style="color:#e65100">0</strong> flowers/honey in <strong id="final-time" style="color:#e65100">0</strong> seconds!
+        </p>
+        <button id="restart-btn" class="action-btn primary">PLAY AGAIN 🔄</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
