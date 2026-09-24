@@ -266,7 +266,7 @@ html, body {
 .bee-character {
   position: absolute;
   left: 20%;
-  top: 45%;
+  top: 0px;
   width: 70px;
   height: 60px;
   z-index: 10;

@@ -222,7 +222,7 @@
       el.textContent = isHoney ? '🍯' : flowerEmojis[i % (flowerEmojis.length - 1)];
 
       const initialX = getW() + i * 220 + Math.random() * 80;
-      const initialY = 25 + Math.random() * (getH() * 0.65);
+      const initialY = 15 + Math.random() * (getH() - 110);
 
       el.style.left = initialX + 'px';
       el.style.top = initialY + 'px';
@@ -243,8 +243,8 @@
     if (type === 'cloud-storm') el.textContent = '🌩️';
 
     const yPos = type === 'branch'
-      ? getH() * 0.80 - 30
-      : 40 + Math.random() * (getH() * 0.60);
+      ? getH() * 0.82 - 30
+      : 25 + Math.random() * (getH() - 120);
 
     const xPos = getW() + 80;
     el.style.left = xPos + 'px';
@@ -403,8 +403,8 @@
     vy *= 0.985; // Damping for smooth float control
     y += vy * dt;
 
-    const ceiling = 2; // Can fly all the way up to the very top edge of the sky!
-    const ground = getH() * 0.82 - 45;
+    const ceiling = -5; // Allows bee to fly all the way up to the very top edge of the playgrid!
+    const ground = getH() - 65; // Allows bee to go down to the bottom grass edge!
 
     // Soft-clamp boundaries so top sky and bottom grass don't cause Game Over
     if (y <= ceiling) {
@@ -446,7 +446,7 @@
       f.x -= 140 * speed * dt;
       if (f.x < -80) {
         f.x = getW() + 80 + Math.random() * 150;
-        f.y = 25 + Math.random() * (getH() * 0.65);
+        f.y = 15 + Math.random() * (getH() - 110);
         f.el.style.top = f.y + 'px';
       }
       f.el.style.left = f.x + 'px';
